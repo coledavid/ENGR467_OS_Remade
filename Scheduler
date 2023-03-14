@@ -1,0 +1,100 @@
+import math
+# import pandas as pd
+import Task
+
+# Test Tasks
+t1 = Task.Task(3, 1, 10)
+t2 = Task.Task(3, 2, 10)
+t3 = Task.Task(3, 1, 15)
+list1 = [t1, t2, t3]
+
+
+# Class to schedule task including all functions related to calculations
+class Scheduler:
+    TBS_Tasks = []
+    P_Tasks = []
+    m_freq = 1  # REMIND USER TO ENTER AS DECIMAL NOT PERCENTAGE
+    hyp_per = 0
+
+    def __init__(self, list, max_frequency):
+        self.m_freq = max_frequency # Input frequency
+        self.TBS_Tasks = list
+
+        print(self.TBS_Tasks)
+        self.hyper_period()
+        print(self.task_util())
+        print(self.ps_select(self.task_util()))
+
+    def hyper_period(self):  # Calculate hyper period based on task periods
+        lcm = 1
+
+        for i in range(0, len(self.TBS_Tasks)):
+            self.P_Tasks.append(self.TBS_Tasks[i].period)
+
+        for i in self.P_Tasks:
+            lcm = lcm * i // math.gcd(lcm, i)
+        self.hyp_per = lcm
+
+    def task_util(self):
+        t_util = 0  # initialize utilization to zero
+        for i in range(0, len(self.TBS_Tasks)):  # add utilization of all tasks
+            if self.TBS_Tasks[i].has_run:  # if task has run add it's actual time
+                t_util += (self.TBS_Tasks[i].e_act / self.TBS_Tasks[i].period)
+                print(t_util)
+            else:  # else add its worst case
+                t_util += (self.TBS_Tasks[i].e_wor / self.TBS_Tasks[i].period)
+                print(t_util)
+        return t_util
+
+    def ps_select(self, utilisation):
+        utilisation = utilisation * 100
+        p_state = []  # list to declare p_states: Item 1 represents name of state, Item 2 represents frequency of
+        # operation
+        if self.m_freq != 1:
+            p_state.append("Custom Frequency")
+            p_state.append(self.m_freq * 100)
+        elif utilisation > 100:
+            p_state.append("Underscheduled, utilisation too high")
+            p_state.append(100)
+            return p_state
+        elif utilisation > 80:
+            p_state.append("P0")
+            p_state.append(100)
+            return p_state
+        elif utilisation > 60:
+            p_state.append("P1")
+            p_state.append(80)
+            return p_state
+        elif utilisation > 40:
+            p_state.append("P2")
+            p_state.append(60)
+            return p_state
+        elif utilisation > 20:
+            p_state.append("P3")
+            p_state.append(40)
+            return p_state
+        elif utilisation > 0:
+            p_state.append("P4")
+            p_state.append(20)
+            return p_state
+        else:
+            p_state.append("Error in task input")
+            p_state.append(20)
+            return p_state
+
+    def task_sched(self):
+        # While(current_run <= self.hyp_per)
+        # Sort tasks in order of ascending period
+        # Schedule in order of list using ps_select(task_util(self))
+        # When task has run i.e t_left (task variable) = 0 set has_run of that task to zero
+        # To check whether a task has been released again initialize a separate
+        # list of periods (only for has_run tasks) and take the modulus
+        # current run time % task period. If this operation is zero the task is
+        # re-released into the list of TBS_tasks and must be resorted.
+        # create list(s) of completed tasks and their pstates.
+        # output whether the tasks were feasibly scheduled.
+        return -1
+
+
+print("Start")
+a = Scheduler(list1, 1)
