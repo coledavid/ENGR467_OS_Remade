@@ -20,7 +20,7 @@ class Scheduler:
     queue = []
     queue_ID = []
     deadlines = []
-    final_output = []
+    final_output = [] # Output list
 
     def __init__(self, list, max_frequency):
         self.m_freq = max_frequency # Input frequency
@@ -39,7 +39,43 @@ class Scheduler:
                 t_util += (self.TBS_Tasks[i].e_wor / self.TBS_Tasks[i].period)
                 #print(t_util)
         return t_util
-        
+    
+    def ps_select(self, utilisation):
+        utilisation = utilisation * 100
+        p_state = []  # list to declare p_states: Item 1 represents name of state, Item 2 represents frequency of
+        # operation
+        if self.m_freq != 1:
+            p_state.append("Custom Frequency")
+            p_state.append(self.m_freq * 100)
+        elif utilisation > 100:
+            p_state.append("Underscheduled, utilisation too high")
+            p_state.append(100)
+            return p_state
+        elif utilisation > 80:
+            p_state.append("P0")
+            p_state.append(100)
+            return p_state
+        elif utilisation > 60:
+            p_state.append("P1")
+            p_state.append(80)
+            return p_state
+        elif utilisation > 40:
+            p_state.append("P2")
+            p_state.append(60)
+            return p_state
+        elif utilisation > 20:
+            p_state.append("P3")
+            p_state.append(40)
+            return p_state
+        elif utilisation > 0:
+            p_state.append("P4")
+            p_state.append(20)
+            return p_state
+        else:
+            p_state.append("Error in task input")
+            p_state.append(20)
+            return p_state
+  
     def hyper_period(self):  # Calculate hyper period based on task periods
         lcm = 1
         for i in range(0, len(self.TBS_Tasks)):
@@ -48,6 +84,9 @@ class Scheduler:
             lcm = lcm * i // math.gcd(lcm, i)
         self.hyp_per = lcm
         
+    # Function to get all release times
+    # release_times_all : [list of all unique release times]
+    # release_times_task: [[list], [of], [release], [times], [by], [task]]
     def get_release_times (self):
         for i in range (len(self.TBS_Tasks)):
             interim_release_times = []
@@ -64,14 +103,9 @@ class Scheduler:
     def update_queue(self, current_run):
         print("DEADLINES")
         print(self.deadlines)
-        # for i in range (len(self.deadlines)):
-        #     if self.deadlines[i] == 0 :
-        #         for task in self.TBS_Tasks:                                     
-        #             if task.id == i+1:
-        #                 self.queue.remove(task)
-        #                 self.queue_ID.remove(task.id)
-        #                 self.TBS_Task[task.id - 1].has_run = True
                         
+        # To remove task if no time left
+        # Sets has run to True + t_left + deadline to -1
         for task in self.TBS_Tasks:
             if task.t_left == 0 :
                 self.queue.remove(task)
@@ -80,26 +114,34 @@ class Scheduler:
                 self.TBS_Tasks[task.id - 1].t_left = -1
                 self.deadlines[task.id - 1] = -1
         
-        if current_run in self.release_times_all:                                        
+        # Based on current time, adds task to queue and resets params 
+        
+        # Check if current run has any releases
+        if current_run in self.release_times_all:
+            #Findinf which tasks are released at this time                                        
             for task_number, release_time in enumerate(self.release_times_task):          
                 if current_run in release_time:                                     
                     for task in self.TBS_Tasks:                                     
                         if task.id == task_number+1:
+                            # If task is added to queue twice, it means a deadline is missed
                             if task in self.queue:                                  
                                 print("Missed Deadline")
                                 self.queue = [-1]              
-                                sys.exit()                                                
+                                sys.exit()
+                                                                                
                             print ("Adding to queue " + str(task.id))
-                            self.queue.append(task)
-                            self.queue_ID.append(task.id)
-                            self.deadlines[task.id-1] = current_run + task.period
-                            self.TBS_Tasks[task.id - 1].has_run = False
+                            self.queue.append(task)                                                 #   Queue of tasks
+                            self.queue_ID.append(task.id)                                           #   Queue of task IDs
+                            self.deadlines[task.id-1] = current_run + task.period                   #   Setting deadlines
+                            self.TBS_Tasks[task.id - 1].has_run = False                         
                             self.TBS_Tasks[task.id - 1].t_left = self.TBS_Tasks[task.id - 1].e_act
         
 
-                        
+    # Retuns the next task to be run 
+    # Retuns None if there is no other task to be run in queue                 
     def next_task_edf(self):
         try:
+            # Get the minimum deadline greater than 0
             earliest_deadline = min(x for x in self.deadlines if x > 0)
                         
             for i, deadline in enumerate(self.deadlines):
@@ -115,14 +157,15 @@ class Scheduler:
                     
         return next_task
 
+    # Main scheduler
     def sch(self):
-        
-        task_start = 0
+    
+        task_start = 0 # To keep track of task starting times
         next_task = None
         current_task = None 
         current_run = 0
         
-        # Initial deadlines
+        # Initial deadlines list
         for task in self.TBS_Tasks:
             self.deadlines.append(-1)
         
@@ -133,34 +176,38 @@ class Scheduler:
             print()
             print("OUTPUT")
             print(self.final_output)
+            
             self.update_queue(current_run)
             next_task = self.next_task_edf()
            
+            # If current task is not the same as next task
             if next_task != current_task:
                if current_task is not None:
 
+                    # Add all the details to output list
                     interim_task_info = []
                     interim_task_info.append(current_task.id)
                     interim_task_info.append(task_start)
                     interim_task_info.append(current_run)
                     self.final_output.append(interim_task_info)
                     
+                    # Set next task as current task and set current time as task start time
                     task_start = current_run
                     current_task = next_task
                else:
+                   # IF there was no task running currently 
+                   # There is no info to append to the final output
                     print ("else")
                     task_start = current_run
                     current_task = next_task
             
             
-            
+            # Decrementing t left and deadlines
             if current_task is not None:          
                 self.TBS_Tasks[current_task.id - 1].t_left -=1   
                 self.deadlines = [x-1 for x in self.deadlines] 
             
+            # Step
             current_run += 1 
              
-               
-
-
 a = Scheduler(list1, 1)
