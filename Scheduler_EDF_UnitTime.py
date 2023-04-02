@@ -6,9 +6,9 @@ import Task
 t1 = Task.Task(1, 3.0, 1.0, 10)
 t2 = Task.Task(2, 4.0, 2.0, 15)
 t3 = Task.Task(3, 3.0, 1.0, 5)
-t4 = Task.Task(4, 6.0, 5.0, 30)
+t4 = Task.Task(4, 6.0, 3.0, 30)
 list1 = [t1, t2, t3, t4]
-pstate_in = [1, 0.8, .6, .5, .4]
+# pstate_in = [1, 0.8, .6, .5, .4]
 
 
 # Class to schedule task including all functions related to calculations
@@ -25,14 +25,16 @@ class Scheduler:
     final_output = []  # Output list
     current_run = 0
     ps_recalc = -1
+    pstate_in = []
 
     # task_start = 0
 
-    def __init__(self, list, max_frequency):
-        self.m_freq = max_frequency  # Input frequency
+    def __init__(self, list, p_states):
+        self.pstate_in = p_states  # Input frequency
         self.TBS_Tasks = list
         self.hyper_period()
         self.sch()
+
 
     def task_util(self):
         t_util = 0  # initialize utilization to zero
@@ -46,19 +48,22 @@ class Scheduler:
         return t_util
 
     def ps_select(self, utilisation):
-        if utilisation > pstate_in[0]:
+        if len(self.pstate_in) < 5:
+            for i in range(0, 4):
+                self.pstate_in.append(self.pstate_in[len(self.pstate_in)-1])
+        if utilisation > self.pstate_in[0]:
             print("Worst case under-scheduled")
-            return pstate_in[0]
-        elif utilisation > pstate_in[1]:
-            return pstate_in[0]
-        elif utilisation > pstate_in[2]:
-            return pstate_in[1]
-        elif utilisation > pstate_in[3]:
-            return pstate_in[2]
-        elif utilisation > pstate_in[4]:
-            return pstate_in[3]
+            return self.pstate_in[0]
+        elif utilisation > self.pstate_in[1]:
+            return self.pstate_in[0]
+        elif utilisation > self.pstate_in[2]:
+            return self.pstate_in[1]
+        elif utilisation > self.pstate_in[3]:
+            return self.pstate_in[2]
+        elif utilisation > self.pstate_in[4]:
+            return self.pstate_in[3]
         else:
-            return pstate_in[4]
+            return self.pstate_in[0]
 
     def ps_update(self):
         if self.deadlines[0] == 0:
@@ -69,7 +74,7 @@ class Scheduler:
     def hyper_period(self):  # Calculate hyper period based on task periods
         lcm = 1
         for i in range(0, len(self.TBS_Tasks)):
-            self.P_Tasks.append(self.TBS_Tasks[i].period)
+            self.P_Tasks.append(int(self.TBS_Tasks[i].period))
         for i in self.P_Tasks:
             lcm = lcm * i // math.gcd(lcm, i)
         self.hyp_per = lcm
@@ -128,7 +133,8 @@ class Scheduler:
             #      " P-state ", self.deadlines[current_task].task_util, " ", self.deadlines[current_task].id,
             #      " current run ", current_run)
             self.deadlines[current_task].has_run = True
-            ps_tmp = f"P-State is {self.deadlines[current_task].task_util}"
+            # ps_tmp = f"P-State is {self.deadlines[current_task].task_util}"
+            ps_tmp = self.deadlines[current_task].task_util
             tmp = [self.deadlines[current_task].id, self.deadlines[current_task].task_start,
                    current_run + self.deadlines[current_task].t_left / self.deadlines[current_task].task_util - 1,
                    ps_tmp]
@@ -147,7 +153,8 @@ class Scheduler:
             #      " P-state ", self.deadlines[current_task].task_util, " ", self.deadlines[current_task].id,
             #      " current run ", current_run)
             self.deadlines[current_task].has_run = True
-            ps_tmp = f"P-State is {self.deadlines[current_task].task_util}"
+            # ps_tmp = f"P-State is {self.deadlines[current_task].task_util}"
+            ps_tmp = self.deadlines[current_task].task_util
             tmp = [self.deadlines[current_task].id, self.deadlines[current_task].task_start,
                    current_run + self.deadlines[current_task].t_left / self.deadlines[current_task].task_util - 1,
                    ps_tmp]
@@ -194,4 +201,4 @@ class Scheduler:
         print(self.final_output)
 
 
-a = Scheduler(list1, 1)
+# a = Scheduler(list1, [1, 0.8, .6, .5, .4])
