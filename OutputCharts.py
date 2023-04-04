@@ -960,7 +960,7 @@ class Page1(tk.Frame):
             Pstate_output = list(set(Pstate_output))
             print("P-State Output", Pstate_output)
             Pstate_output = list(set(Pstate_output))
-            print("P-State Output", Pstate_output.sort())
+            print("P-State Output", Pstate_output.sort(reverse = True))
             count_S = 0
             tbs_list = []
             for i in range(0, len(Task_output)):
@@ -968,6 +968,8 @@ class Page1(tk.Frame):
                 t1 = Task.Task(count_S, Task_output.item(i, 1), Task_output.item(i, 2), Task_output.item(i, 0))
                 tbs_list.append(t1)
             a = Scheduler(tbs_list, Pstate_output)
+            if a.error != "":
+                tk.messagebox.showwarning(title="Error", message= a.error)
             a.final_output = a.adjust_final_output_for_preemption(a.final_output)
             a.plot_output()
             print(a.final_output)

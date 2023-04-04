@@ -26,6 +26,7 @@ class Scheduler:
     current_run = 0
     ps_recalc = -1
     pstate_in = []
+    error = ""
 
     # task_start = 0
 
@@ -38,6 +39,7 @@ class Scheduler:
         self.final_output = []
         self.current_run = 0
         self.ps_recalc = -1
+        self.error = ""
         self.hyper_period()
         self.sch()
 
@@ -96,10 +98,11 @@ class Scheduler:
                 print(self.deadlines[i].deadline)
                 print(self.deadlines[i].id)
                 print(self.final_output)
-                error_msg = f"Underscheduled by Task {self.deadlines[i].id} at time unit {self.current_run}"
+                self.error = f"Underscheduled by Task {self.deadlines[i].id} at time unit {self.current_run}"
                 ## self.final_output = error_msg
                 print(self.final_output)
-                sys.exit(error_msg)  # Missed deadline
+                ## sys.exit(error_msg)  # Missed deadline
+                # quit()
             elif self.deadlines[i].deadline == 0 and self.deadlines[i].has_run == True:
                 self.deadlines[i].reset()
             self.deadlines[i].deadline -= 1
@@ -173,7 +176,7 @@ class Scheduler:
             # print("RunTask dec ", self.deadlines[current_task].t_left / self.deadlines[current_task].task_util,
             #      " P-state ", self.deadlines[current_task].task_util, " ", self.deadlines[current_task].id,
             #      " current run ", current_run)
-
+            # print(self.deadlines[current_task].t_left, " Util ", self.deadlines[current_task].task_util)
             if self.deadlines[current_task].t_left == self.deadlines[current_task].e_act:
                 self.deadlines[self.find_cur(0)].task_start = current_run - 1
             self.deadlines[current_task].t_left -= 1 * float(self.ps_select(self.task_util()))
@@ -258,8 +261,7 @@ class Scheduler:
 
                 color = task_colors[task_id]
                 bar_height = p_state
-                axes[task_id - 1].barh(0, end_time - start_time, left=start_time, height=bar_height, color=color,
-                                       align='edge')
+                axes[task_id - 1].barh(0, end_time - start_time, left=start_time, height=bar_height, color=color, align='edge')
 
                 axes[task_id - 1].set_ylim(0, 1)
         ##New for loop##
