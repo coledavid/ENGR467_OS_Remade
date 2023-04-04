@@ -511,15 +511,18 @@ class Page1(tk.Frame):
 
         def read_data_T():
             global Task_output
+            global warn_T
+            warn_T = 0
 
             if count_T >= 1:
                 a = T1PE.get()
                 b = T1WC.get()
                 c = T1BC.get()
+                d = [0, 0, 0]
                 if len(a) != 0 and len(b) != 0 and len(c) != 0:
                     if a.isalpha() or b.isalpha() or c.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="Task 1 - Please don't type in letters")
-                        Task_output = []
+                        warn_T = 1
                     else:
                         a = float(a)
                         b = float(b)
@@ -539,40 +542,42 @@ class Page1(tk.Frame):
                                         else:
                                             tk.messagebox.showwarning(title="Error 1",
                                                                       message="The Task 1 Worst Case Execution time cannot be longer than the period")
-                                            Task_output = []
+                                            warn_T = 1
                                     else:
                                         tk.messagebox.showwarning(title="Error 2",
                                                                   message="The Task 1 Actual Case Execution time cannot be longer than the period")
-                                        Task_output = []
+                                        warn_T = 1
                                 else:
                                     tk.messagebox.showwarning(title="Error 3",
                                                               message="The Task 1 Worst Case Execution time must be longer than (or equal to) the Actual Execution time")
-                                    Task_output = []
+                                    warn_T = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 4",
                                                           message="Task 1 cannot have any negative values")
-                                Task_output = []
+                                warn_T = 1
                         else:
                             tk.messagebox.showwarning(title="Error 5",
                                                       message="Task 1 cannot have any values equal to 0")
-                            Task_output = []
+                            warn_T = 1
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Task 1 - Please make sure all entry boxes are filled")
-                    Task_output = []
+                    warn_T = 1
 
             if count_T >= 2:
                 a = T2PE.get()
                 b = T2WC.get()
                 c = T2BC.get()
+                e = [0, 0, 0]
                 if len(a) != 0 and len(b) != 0 and len(c) != 0:
                     if a.isalpha() or b.isalpha() or c.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="Task 2- Please don't type in letters")
-                        Task_output = []
+                        warn_T = 1
                     else:
                         a = float(a)
                         b = float(b)
                         c = float(c)
+
                         if a != 0 and b != 0 and c != 0:
 
                             if a > 0 and b > 0 and c > 0:
@@ -588,40 +593,42 @@ class Page1(tk.Frame):
                                         else:
                                             tk.messagebox.showwarning(title="Error 1",
                                                                       message="The Task 2 Worst Case Execution time cannot be longer than the period")
-                                            Task_output = []
+                                            warn_T = 1
                                     else:
                                         tk.messagebox.showwarning(title="Error 2",
                                                                   message="The Task 2 Actual Case Execution time cannot be longer than the period")
-                                        Task_output = []
+                                        warn_T = 1
                                 else:
                                     tk.messagebox.showwarning(title="Error 3",
                                                               message="The Task 2 Worst Case Execution time must be longer than (or equal to) the Actual Execution time")
-                                    Task_output = []
+                                    warn_T = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 4",
                                                           message="Task 2 cannot have any negative values")
-                                Task_output = []
+                                warn_T = 1
                         else:
                             tk.messagebox.showwarning(title="Error 5",
                                                       message="Task 2 cannot have any values equal to 0")
-                            Task_output = []
+                            warn_T = 1
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Task 2 - Please make sure all entry boxes are filled")
-                    Task_output = []
+                    warn_T = 1
 
             if count_T >= 3:
                 a = T3PE.get()
                 b = T3WC.get()
                 c = T3BC.get()
+                f = [0, 0, 0]
                 if len(a) != 0 and len(b) != 0 and len(c) != 0:
                     if a.isalpha() or b.isalpha() or c.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="Task 3 - Please don't type in letters")
-                        Task_output = []
+                        warn_T = 1
                     else:
                         a = float(a)
                         b = float(b)
                         c = float(c)
+
                         if a != 0 and b != 0 and c != 0:
 
                             if a > 0 and b > 0 and c > 0:
@@ -636,40 +643,42 @@ class Page1(tk.Frame):
                                         else:
                                             tk.messagebox.showwarning(title="Error 1",
                                                                       message="The Task 3 Worst Case Execution time cannot be longer than the period")
-                                            Task_output = []
+                                            warn_T = 1
                                     else:
                                         tk.messagebox.showwarning(title="Error 2",
                                                                   message="The Task 3 Actual Case Execution time cannot be longer than the period")
-                                        Task_output = []
+                                        warn_T = 1
                                 else:
                                     tk.messagebox.showwarning(title="Error 3",
                                                               message="The Task 3 Worst Case Execution time must be longer than (or equal to) the Actual Execution time")
-                                    Task_output = []
+                                    warn_T = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 4",
                                                           message="Task 3 cannot have any negative values")
-                                Task_output = []
+                                warn_T = 1
                         else:
                             tk.messagebox.showwarning(title="Error 5",
                                                       message="Task 3 cannot have any values equal to 0")
-                            Task_output = []
+                            warn_T = 1
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Task 3 - Please make sure all entry boxes are filled")
-                    Task_output = []
+                    warn_T = 1
 
             if count_T >= 4:
                 a = T4PE.get()
                 b = T4WC.get()
                 c = T4BC.get()
+                g = [0, 0, 0]
                 if len(a) != 0 and len(b) != 0 and len(c) != 0:
                     if a.isalpha() or b.isalpha() or c.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="Task 4- Please don't type in letters")
-                        Task_output = []
+                        warn_T = 1
                     else:
                         a = float(a)
                         b = float(b)
                         c = float(c)
+
                         if a != 0 and b != 0 and c != 0:
 
                             if a > 0 and b > 0 and c > 0:
@@ -684,38 +693,39 @@ class Page1(tk.Frame):
                                         else:
                                             tk.messagebox.showwarning(title="Error 1",
                                                                       message="The Task 4 Worst Case Execution time cannot be longer than the period")
-                                            Task_output = []
+                                            warn_T = 1
                                     else:
                                         tk.messagebox.showwarning(title="Error 2",
                                                                   message="The Task 4 Actual Case Execution time cannot be longer than the period")
-                                        Task_output = []
+                                        warn_T = 1
                                 else:
                                     tk.messagebox.showwarning(title="Error 3",
                                                               message="The Task 4 Worst Case Execution time must be longer than (or equal to) the Actual Execution time")
-                                    Task_output = []
+                                    warn_T = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 4",
                                                           message="Task 4 cannot have any negative values")
-                                Task_output = []
+                                warn_T = 1
                         else:
                             tk.messagebox.showwarning(title="Error 5",
                                                       message="Task 4 cannot have any values equal to 0")
-                            Task_output = []
+                            warn_T = 1
 
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Task 4 - Please make sure all entry boxes are filled")
-                    Task_output = []
+                    warn_T = 1
 
             if count_T >= 5:
                 a = T5PE.get()
                 b = T5WC.get()
                 c = T5BC.get()
+                h = [0, 0, 0]
 
                 if len(a) != 0 and len(b) != 0 and len(c) != 0:
                     if a.isalpha() or b.isalpha() or c.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="Task 5 - Please don't type in letters")
-                        Task_output = []
+                        warn_T = 1
                     else:
                         a = float(a)
                         b = float(b)
@@ -735,29 +745,30 @@ class Page1(tk.Frame):
                                         else:
                                             tk.messagebox.showwarning(title="Error 1",
                                                                       message="The Task 5 Worst Case Execution time cannot be longer than the period")
-                                            Task_output = []
+                                            warn_T = 1
                                     else:
                                         tk.messagebox.showwarning(title="Error 2",
                                                                   message="The Task 5 Actual Case Execution time cannot be longer than the period")
-                                        Task_output = []
+                                        warn_T = 1
                                 else:
                                     tk.messagebox.showwarning(title="Error 3",
                                                               message="The Task 5 Worst Case Execution time must be longer than (or equal to) the Actual Execution time")
-                                    Task_output = []
+                                    warn_T = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 4",
                                                           message="Task 5 cannot have any negative values")
-                                Task_output = []
+                                warn_T = 1
                         else:
                             tk.messagebox.showwarning(title="Error 5",
                                                       message="Task 5 cannot have any values equal to 0")
-                            Task_output = []
+                            warn_T = 1
 
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Task 5 - Please make sure all entry boxes are filled")
-                    Task_output = []
-
+                    warn_T = 1
+            if warn_T == 1:
+                Task_output = []
             print("Final Task Output Matrix", Task_output)
             #####################                   GET Preselected P-States                #############################
             global Pstate_output
@@ -769,8 +780,6 @@ class Page1(tk.Frame):
                 Pstate_output.append(a)
                 Pstate_output.append(b)
                 Pstate_output.append(c)
-                Pstate_output = list(dict.fromkeys(Pstate_output))
-                print(Pstate_output)
 
             elif var2.get() == 1:
                 a = 0.9
@@ -780,8 +789,6 @@ class Page1(tk.Frame):
                 Pstate_output.append(a)
                 Pstate_output.append(b)
                 Pstate_output.append(c)
-                Pstate_output = list(dict.fromkeys(Pstate_output))
-                print(Pstate_output)
 
             elif var3.get() == 1:
                 a = 0.8
@@ -791,19 +798,19 @@ class Page1(tk.Frame):
                 Pstate_output.append(a)
                 Pstate_output.append(b)
                 Pstate_output.append(c)
-                Pstate_output = list(dict.fromkeys(Pstate_output))
-                print(Pstate_output)
 
             elif count_P == 0:
                 tk.messagebox.showwarning(title="Error",
                                           message="You must either use Preselected P-States or add your own")
             #####################                       GET Custom P-State Values                  #############################
+            global warn_p
+            warn_p = 0
             if count_P >= 1:
                 a = P1E.get()
                 if len(a) != 0:
                     if a.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="P-State 1 - Please don't type in letters")
-                        Pstate_output = []
+                        warn_p = 1
                     else:
                         a = float(a)
 
@@ -814,26 +821,26 @@ class Page1(tk.Frame):
                                 else:
                                     tk.messagebox.showwarning(title="Error 1",
                                                               message="Custom P-State 1 cannot be larger than 1")
-                                    Pstate_output = []
+                                    warn_p = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 2",
                                                           message="Custom P-State 1 cannot have any negative values")
-                                Pstate_output = []
+                                warn_p = 1
                         else:
                             tk.messagebox.showwarning(title="Error 3",
                                                       message="Custom P-State 1 cannot have any values equal to 0")
-                            Pstate_output = []
+                            warn_p = 1
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Custom P-State 1 - Please make sure all entry boxes are filled")
-                    Pstate_output = []
+                    warn_p = 1
 
             if count_P >= 2:
                 a = P2E.get()
                 if len(a) != 0:
                     if a.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="P-State 1 - Please don't type in letters")
-                        Pstate_output = []
+                        warn_p = 1
                     else:
                         a = float(a)
 
@@ -844,26 +851,26 @@ class Page1(tk.Frame):
                                 else:
                                     tk.messagebox.showwarning(title="Error 1",
                                                               message="Custom P-State 2 cannot be larger than 1")
-                                    Pstate_output = []
+                                    warn_p = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 2",
                                                           message="Custom P-State 2 cannot have any negative values")
-                                Pstate_output = []
+                                warn_p = 1
                         else:
                             tk.messagebox.showwarning(title="Error 3",
                                                       message="Custom P-State 2 cannot have any values equal to 0")
-                            Pstate_output = []
+                            warn_p = 1
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Custom P-State 2 - Please make sure all entry boxes are filled")
-                    Pstate_output = []
+                    warn_p = 1
 
             if count_P >= 3:
                 a = P3E.get()
                 if len(a) != 0:
                     if a.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="P-State 1 - Please don't type in letters")
-                        Pstate_output = []
+                        warn_p = 1
                     else:
                         a = float(a)
 
@@ -874,26 +881,26 @@ class Page1(tk.Frame):
                                 else:
                                     tk.messagebox.showwarning(title="Error 1",
                                                               message="Custom P-State 3 cannot be larger than 1")
-                                    Pstate_output = []
+                                    warn_p = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 2",
                                                           message="Custom P-State 3 cannot have any negative values")
-                                Pstate_output = []
+                                warn_p = 1
                         else:
                             tk.messagebox.showwarning(title="Error 3",
                                                       message="Custom P-State 3 cannot have any values equal to 0")
-                            Pstate_output = []
+                            warn_p = 1
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Custom P-State 3 - Please make sure all entry boxes are filled")
-                    Pstate_output = []
+                    warn_p = 1
 
             if count_P >= 4:
                 a = P4E.get()
                 if len(a) != 0:
                     if a.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="P-State 1 - Please don't type in letters")
-                        Pstate_output = []
+                        warn_p = 1
                     else:
                         a = float(a)
 
@@ -904,26 +911,26 @@ class Page1(tk.Frame):
                                 else:
                                     tk.messagebox.showwarning(title="Error 1",
                                                               message="Custom P-State 4 cannot be larger than 1")
-                                    Pstate_output = []
+                                    warn_p = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 2",
                                                           message="Custom P-State 4 cannot have any negative values")
-                                Pstate_output = []
+                                warn_p = 1
                         else:
                             tk.messagebox.showwarning(title="Error 3",
                                                       message="Custom P-State 4 cannot have any values equal to 0")
-                            Pstate_output = []
+                            warn_p = 1
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Custom P-State 4 - Please make sure all entry boxes are filled")
-                    Pstate_output = []
+                    warn_p = 1
 
             if count_P >= 5:
                 a = P5E.get()
                 if len(a) != 0:
                     if a.isalpha():
                         tk.messagebox.showwarning(title="Error 7", message="P-State 1 - Please don't type in letters")
-                        Pstate_output = []
+                        warn_p = 1
                     else:
                         a = float(a)
                         if a != 0:
@@ -933,23 +940,27 @@ class Page1(tk.Frame):
                                 else:
                                     tk.messagebox.showwarning(title="Error 1",
                                                               message="Custom P-State 5 cannot be larger than 1")
-                                    Pstate_output = []
+                                    warn_p = 1
                             else:
                                 tk.messagebox.showwarning(title="Error 2",
                                                           message="Custom P-State 5 cannot have any negative values")
-                                Pstate_output = []
+                                warn_p = 1
                         else:
                             tk.messagebox.showwarning(title="Error 3",
                                                       message="Custom P-State 5 cannot have any values equal to 0")
-                            Pstate_output = []
+                            warn_p = 1
                 else:
                     tk.messagebox.showwarning(title="Error 6",
                                               message="Custom P-State 2 - Please make sure all entry boxes are filled")
-                    Pstate_output = []
+                    warn_p = 1
+            if warn_p == 1:
+                Pstate_output = []
+                warn_p = 0  # reset flag
 
             Pstate_output = list(set(Pstate_output))
+            print("P-State Output", Pstate_output)
+            Pstate_output = list(set(Pstate_output))
             print("P-State Output", Pstate_output.sort())
-            print("Check ", Task_output.item(0, 1))
             count_S = 0
             tbs_list = []
             for i in range(0, len(Task_output)):
@@ -957,22 +968,10 @@ class Page1(tk.Frame):
                 t1 = Task.Task(count_S, Task_output.item(i, 1), Task_output.item(i, 2), Task_output.item(i, 0))
                 tbs_list.append(t1)
             a = Scheduler(tbs_list, Pstate_output)
+            a.final_output = a.adjust_final_output_for_preemption(a.final_output)
+            a.plot_output()
             print(a.final_output)
 
-
-
-        #                                             Pass to scheduler                                                 #
-        #################################################################################################################
-
-        def schedule():
-            count_S = 0
-            tbs_list = []
-            for i in range(0, len(Task_output)):
-                count_S += 1
-                t1 = Task.Task(count_S, Task_output.item(i, 0), Task_output.item(i, 1), Task_output.item(i, 2))
-                tbs_list.append(t1)
-            a = Scheduler(tbs_list, Pstate_output.sort())
-            print(a.final_output)
         #####################                          PAGE 1  BUTTONS                      #############################
 
         # Create "Return to instructions" button and place
