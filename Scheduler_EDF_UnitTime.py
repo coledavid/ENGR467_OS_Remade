@@ -57,7 +57,7 @@ class Scheduler:
 
     def ps_select(self, utilisation):
         if len(self.pstate_in) < 8:
-            for i in range(0, 4):
+            for i in range(0, 7):
                 self.pstate_in.append(self.pstate_in[len(self.pstate_in) - 1])
         if utilisation > self.pstate_in[0]:
             print("Worst case under-scheduled")
