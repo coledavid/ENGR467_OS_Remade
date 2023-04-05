@@ -116,7 +116,7 @@ class Scheduler:
             # print(self.deadlines[i].deadline) # TROUBLESHOOTING
         self.deadlines.sort()
 
-    def find_cur(self, return_type):
+    def find_cur(self, return_type): # finds current task to run based on deadline and has_run
         i = 0
         while i < len(self.deadlines):
             if not self.deadlines[i].has_run:
@@ -127,7 +127,7 @@ class Scheduler:
             i += 1
         return None
 
-    def find_next(self, return_type):
+    def find_next(self, return_type): # finds next task to run based on deadline and has_run
         i = 0
         while i < len(self.deadlines):
             if not self.deadlines[i].has_run:
@@ -144,11 +144,7 @@ class Scheduler:
     def run_task(self, current_task, task_start, current_run):
         tmp = []
         if self.deadlines[current_task].t_left / self.deadlines[current_task].task_util <= 0.99999:
-            # print("RunTask < 1", self.deadlines[current_task].t_left / self.deadlines[current_task].task_util,
-            #      " P-state ", self.deadlines[current_task].task_util, " ", self.deadlines[current_task].id,
-            #      " current run ", current_run)
             self.deadlines[current_task].has_run = True
-            # ps_tmp = f"P-State is {self.deadlines[current_task].task_util}"
             ps_tmp = {self.deadlines[current_task].task_util}
             tmp = [self.deadlines[current_task].id, self.deadlines[current_task].task_start,
                    current_run + self.deadlines[current_task].t_left / self.deadlines[current_task].task_util - 1,
@@ -164,11 +160,7 @@ class Scheduler:
                     (1 - (self.deadlines[current_task].t_left / self.deadlines[current_task].task_util)) *
                     self.deadlines[self.find_cur(0)].task_util)
         elif self.deadlines[current_task].t_left / self.deadlines[current_task].task_util == 1:
-            # print("RunTask tl == 1", self.deadlines[current_task].t_left / self.deadlines[current_task].task_util,
-            #      " P-state ", self.deadlines[current_task].task_util, " ", self.deadlines[current_task].id,
-            #      " current run ", current_run)
             self.deadlines[current_task].has_run = True
-            # ps_tmp = f"P-State is {self.deadlines[current_task].task_util}"
             ps_tmp = {self.deadlines[current_task].task_util}
             tmp = [self.deadlines[current_task].id, self.deadlines[current_task].task_start,
                    current_run + self.deadlines[current_task].t_left / self.deadlines[current_task].task_util - 1,
@@ -180,31 +172,23 @@ class Scheduler:
                     self.deadlines[self.find_cur(0)].task_start = current_run + self.deadlines[current_task].t_left / \
                                                                   self.deadlines[current_task].task_util - 1
         else:
-            # print("RunTask dec ", self.deadlines[current_task].t_left / self.deadlines[current_task].task_util,
-            #      " P-state ", self.deadlines[current_task].task_util, " ", self.deadlines[current_task].id,
-            #      " current run ", current_run)
-            # print(self.deadlines[current_task].t_left, " Util ", self.deadlines[current_task].task_util)
             if self.deadlines[current_task].t_left == self.deadlines[current_task].e_act:
                 self.deadlines[self.find_cur(0)].task_start = current_run - 1
             self.deadlines[current_task].t_left -= 1 * float(self.ps_select(self.task_util()))
 
     def sch(self):
-        # self.task_start =0  # To keep track of task starting tim
         self.current_run = 1
         self.deadline_init()
         self.deadline_update()
         current_task = self.deadlines[0]
         self.deadlines[0].task_util = self.ps_select(self.task_util())
         while self.current_run <= self.hyp_per:
-            # print("Current run ", current_run)
-            # print("Current Deadline ", self.deadlines[0].deadline)
             if self.find_cur(1) is not None and current_task is not None:
                 if current_task != self.find_cur(1):
                     current_task.pre = True
             current_task = self.find_cur(1)
             if self.ps_recalc == 1:
                 self.deadlines[self.find_cur(0)].task_util = self.ps_select(self.task_util())
-                # print(current_task.id, " ", current_task.task_util)
             if current_task is not None:
                 self.run_task(self.find_cur(0), current_task.task_start, self.current_run)
             if self.deadlines[0].deadline == 0:
@@ -290,6 +274,6 @@ class Scheduler:
         plt.xlim(0, self.hyp_per)
         plt.show()
 
-# a = Scheduler(list1, [1, 0.8, .6, .5, .4])
+a = Scheduler(list1, [1, 0.8, .6, .5, .4])
 # a.final_output = a.adjust_final_output_for_preemption(a.final_output)
 # a.plot_output()

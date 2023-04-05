@@ -15,7 +15,7 @@ from tkinter import messagebox  # Used for pop up warnings
 import numpy as np  # import libaray to use matrix functions
 
 import Task
-from Scheduler_EDF_UnitTime import Scheduler
+from Scheduler import Scheduler
 
 # Global Variables ##############################################################################################
 # Task Entry Global Variables
