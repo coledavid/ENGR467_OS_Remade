@@ -70,7 +70,7 @@ class Scheduler:
         elif utilisation > self.pstate_in[4]:
             return self.pstate_in[3]
         else:
-            return self.pstate_in[0]
+            return self.pstate_in[4]
 
     def ps_update(self):
         if self.deadlines[0] == 0:

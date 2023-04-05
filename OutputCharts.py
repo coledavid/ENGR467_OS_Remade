@@ -958,9 +958,7 @@ class Page1(tk.Frame):
                 warn_p = 0  # reset flag
 
             Pstate_output = list(set(Pstate_output))
-            print("P-State Output", Pstate_output)
-            Pstate_output = list(set(Pstate_output))
-            print("P-State Output", Pstate_output.sort(reverse = True))
+            print("P-State Output ", Pstate_output.sort(reverse = True))
             count_S = 0
             tbs_list = []
             for i in range(0, len(Task_output)):

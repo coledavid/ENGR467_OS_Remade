@@ -14,6 +14,9 @@ from tkinter import ttk         # Used for styling the GUI
 from tkinter import messagebox  # Used for pop up warnings
 import numpy as np              # import libaray to use matrix functions
 
+import Task
+from Scheduler_EDF_UnitTime import Scheduler
+
 # Global Variables ##############################################################################################
 # Task Entry Global Variables
 
@@ -986,8 +989,8 @@ class Page1(tk.Frame):
                     
             Pstate_output = list(set(Pstate_output))
             print("P-State Output", Pstate_output)
-            Pstate_output = list(set(Pstate_output))
-            print("P-State Output", Pstate_output.sort(reverse = True))
+            Pstate_output = sorted(Pstate_output, reverse = True)
+            print("P-State Output Sorted", Pstate_output)
             count_S = 0
             tbs_list = []
             for i in range(0, len(Task_output)):
