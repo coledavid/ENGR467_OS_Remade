@@ -31,6 +31,7 @@ class Scheduler:
     # task_start = 0
 
     def __init__(self, list, p_states):
+        self.pstate_in = []
         self.pstate_in = p_states  # Input frequency
         self.TBS_Tasks = list
         self.P_Tasks = []
@@ -55,7 +56,7 @@ class Scheduler:
         return t_util
 
     def ps_select(self, utilisation):
-        if len(self.pstate_in) < 5:
+        if len(self.pstate_in) < 8:
             for i in range(0, 4):
                 self.pstate_in.append(self.pstate_in[len(self.pstate_in) - 1])
         if utilisation > self.pstate_in[0]:
@@ -69,8 +70,14 @@ class Scheduler:
             return self.pstate_in[2]
         elif utilisation > self.pstate_in[4]:
             return self.pstate_in[3]
-        else:
+        elif utilisation > self.pstate_in[5]:
             return self.pstate_in[4]
+        elif utilisation > self.pstate_in[6]:
+            return self.pstate_in[5]
+        elif utilisation > self.pstate_in[7]:
+            return self.pstate_in[6]
+        else:
+            return self.pstate_in[7]
 
     def ps_update(self):
         if self.deadlines[0] == 0:
