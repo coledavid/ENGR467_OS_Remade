@@ -234,7 +234,9 @@ class Scheduler:
         p_state_display = {}
 
         num_tasks = len(task_ids)
-        fig, axes = plt.subplots(nrows=num_tasks, sharex=True, sharey=True)
+        fig, ax = plt.subplots(nrows=num_tasks, ncols=1, sharex=True, sharey=True, squeeze=False)
+        axes = [a[0] for a in ax]
+
         fig.subplots_adjust(hspace=0.5)
         fig.suptitle("Cycle Conserving EDF Scheduling")
 
